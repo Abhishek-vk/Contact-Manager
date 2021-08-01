@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre&family=Bree+Serif&display=swap');
+
+#navbar{
+    background: #438cf9;
+    box-shadow: 0 0 5px #438cf9;
+    z-index: 999;
+}
+
+.brand{
+    font-family: 'Bree Serif', serif;
+}
+
+#navbar ul{
+    font-family: 'Averia Serif Libre', cursive;
+    font-weight: bold;
+}
+
+#navbar ul a{
+    border-radius: 5px;
+}
+
+#navbar ul .active{
+    color: #1270fc !important;
+    background: #ffff46;
+}
