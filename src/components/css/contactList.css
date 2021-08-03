@@ -24,7 +24,12 @@
 }
 
 .contactBox:hover{
-    background: #a8cbff;
-    color: #3874cf;
+    background: #c0d9ff;
+    color: #4c80ce;
     cursor: pointer;
+}
+
+.activeContactBox{
+    background: #a8cbff !important;
+    color: #3874cf !important;
 }
