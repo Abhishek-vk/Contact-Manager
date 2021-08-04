@@ -1,0 +1,12 @@
+@keyframes slowBlinking{
+    0%{opacity: 1;}
+    50%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+.loadingText{
+    animation: slowBlinking 2s linear 0s infinite normal none;
+    color: grey;
+    font-family: 'Averia Serif Libre', cursive;
+    font-size: 3rem;
+}

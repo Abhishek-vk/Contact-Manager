@@ -1,15 +1,28 @@
 import ContactList from "./contactList";
 import { useState, useEffect } from "react";
+import ContactDetails from "./contactDetails";
+import "../css/loading.css";
 
 export default function Homepage() {
+    const [loading, setLoading] = useState(true);
     const [contactList, setcontactList] = useState([]);
     const [total, setTotal] = useState(0);
+    const [activeContact, setActiveContact] = useState({
+        id: "",
+        name: "",
+        avatar: "",
+        userDetails: {
+            phone: "",
+            email: "",
+            address: "",
+            website: "",
+        },
+    });
 
     useEffect(() => {
         fetch("http://localhost:8000/api/v1/contacts")
             .then((response) => response.json())
             .then((result) => {
-                // setActiveList(new Array(result.total).fill(false));
                 setTotal(result.total);
                 return result.data;
             })
@@ -20,31 +33,44 @@ export default function Homepage() {
                     GroupedContacts.push([]);
                 }
                 data.forEach((contact) => {
-                    GroupedContacts[contact.name.charCodeAt(0) - 64].push({
+                    let firstLetterAscii = contact.name.charCodeAt(0);
+                    let groupIndex = 0;
+                    if (firstLetterAscii > 64 && firstLetterAscii < 91)
+                        groupIndex = firstLetterAscii - 64;
+                    else if (firstLetterAscii > 96 && firstLetterAscii < 123)
+                        groupIndex = firstLetterAscii - 96;
+                    GroupedContacts[groupIndex].push({
                         index: count,
                         ...contact,
                     });
                     count++;
                 });
                 setcontactList(GroupedContacts);
+                setLoading(false);
             })
-            .catch((err) => console.log(err));
+            .catch((error) => alert(error));
     }, []);
 
     const showActiveContact = (contact) => {
-        console.log(contact);
+        setActiveContact(contact);
     };
 
     return (
-        <div className="overflow-hidden" style={{ flex: "1" }}>
-            <div className="row h-100">
-                <ContactList
-                    total={total}
-                    list={contactList}
-                    showActiveContact={showActiveContact}
-                />
-                <div className="col p-0"></div>
-            </div>
-        </div>
+        <>
+            {loading ? (
+                <div className="h1 d-flex m-auto loadingText">Loading...</div>
+            ) : (
+                <div className="overflow-hidden" style={{ flex: "1" }}>
+                    <div className="row h-100">
+                        <ContactList
+                            total={total}
+                            list={contactList}
+                            showActiveContact={showActiveContact}
+                        />
+                        <ContactDetails {...activeContact} />
+                    </div>
+                </div>
+            )}
+        </>
     );
 }

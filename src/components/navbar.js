@@ -17,7 +17,7 @@ export default function Navbar() {
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon small"></span>
                 </button>
                 <div
                     className="collapse navbar-collapse"
