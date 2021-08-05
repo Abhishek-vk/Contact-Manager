@@ -11,7 +11,7 @@ export default function Homepage() {
         id: "",
         name: "",
         avatar: "",
-        userDetails: {
+        "user-details": {
             phone: "",
             email: "",
             address: "",
@@ -60,7 +60,10 @@ export default function Homepage() {
             {loading ? (
                 <div className="h1 d-flex m-auto loadingText">Loading...</div>
             ) : (
-                <div className="overflow-hidden" style={{ flex: "1" }}>
+                <div
+                    className="overflow-hidden container-fluid"
+                    style={{ flex: "1" }}
+                >
                     <div className="row h-100">
                         <ContactList
                             total={total}

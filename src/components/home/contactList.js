@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import altUserImg from "../img/user-alt.png";
 import "../css/contactList.css";
 
@@ -46,22 +46,23 @@ export default function ContactList({ list, total, showActiveContact }) {
         setActiveList(tempIsActive);
     };
     return (
-        <div id="contactList" className="h-100 col-auto pe-0">
+        <div id="contactList" className="h-100 col-auto px-0">
             {list.map((contactGroup, index) =>
                 !!contactGroup.length ? (
-                    <>
+                    <React.Fragment key={index}>
                         <div
                             className="position-sticky top-0 bg-light small fw-bold"
                             style={{
                                 fontFamily: '"Averia Serif Libre", cursive',
                                 cursor: "default",
+                                color: "#708090",
                             }}
                         >
                             {String.fromCharCode(index + 64)}
                         </div>
-                        {contactGroup.map((contact, index) => (
+                        {contactGroup.map((contact) => (
                             <ContactBox
-                                key={index}
+                                key={contact.index}
                                 contact={contact}
                                 isActive={() => isActiveList[contact.index]}
                                 setActive={setActive}
@@ -70,7 +71,7 @@ export default function ContactList({ list, total, showActiveContact }) {
                                 }
                             />
                         ))}
-                    </>
+                    </React.Fragment>
                 ) : null
             )}
         </div>
