@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import ContactDetails from "./contactDetails";
 import "../css/loading.css";
 
-export default function Homepage() {
+export default function Homepage(props) {
     const [loading, setLoading] = useState(true);
+    const [rawList, setRawList] = useState([]);
     const [contactList, setcontactList] = useState([]);
     const [total, setTotal] = useState(0);
     const [activeContact, setActiveContact] = useState({
@@ -19,33 +20,38 @@ export default function Homepage() {
         },
     });
 
+    const GroupContacts = (arrayData) => {
+        let GroupedContacts = [],
+            count = 0;
+        for (let index = 0; index < 27; index++) {
+            GroupedContacts.push([]);
+        }
+        arrayData.forEach((contact) => {
+            let firstLetterAscii = contact.name.charCodeAt(0);
+            let groupIndex = 0;
+            if (firstLetterAscii > 64 && firstLetterAscii < 91)
+                groupIndex = firstLetterAscii - 64;
+            else if (firstLetterAscii > 96 && firstLetterAscii < 123)
+                groupIndex = firstLetterAscii - 96;
+            GroupedContacts[groupIndex].push({
+                index: count,
+                ...contact,
+            });
+            count++;
+        });
+        return GroupedContacts;
+    };
+
     useEffect(() => {
         fetch("http://localhost:8000/api/v1/contacts")
             .then((response) => response.json())
             .then((result) => {
                 setTotal(result.total);
+                setRawList(result.data);
                 return result.data;
             })
             .then((data) => {
-                let GroupedContacts = [],
-                    count = 0;
-                for (let index = 0; index < 27; index++) {
-                    GroupedContacts.push([]);
-                }
-                data.forEach((contact) => {
-                    let firstLetterAscii = contact.name.charCodeAt(0);
-                    let groupIndex = 0;
-                    if (firstLetterAscii > 64 && firstLetterAscii < 91)
-                        groupIndex = firstLetterAscii - 64;
-                    else if (firstLetterAscii > 96 && firstLetterAscii < 123)
-                        groupIndex = firstLetterAscii - 96;
-                    GroupedContacts[groupIndex].push({
-                        index: count,
-                        ...contact,
-                    });
-                    count++;
-                });
-                setcontactList(GroupedContacts);
+                setcontactList(GroupContacts(data));
                 setLoading(false);
             })
             .catch((error) => alert(error));
@@ -53,6 +59,25 @@ export default function Homepage() {
 
     const showActiveContact = (contact) => {
         setActiveContact(contact);
+    };
+
+    const updateContactList = (action, data) => {
+        switch (action) {
+            case "Update":
+                let tempRawList = rawList;
+                for (let i = 0; i < tempRawList.length; i++) {
+                    if (tempRawList[i].id === data.id) {
+                        tempRawList[i] = { ...rawList[i], ...data };
+                        setActiveContact(tempRawList[i]);
+                    }
+                }
+                setRawList(tempRawList);
+                setcontactList(GroupContacts(tempRawList));
+                break;
+
+            default:
+                break;
+        }
     };
 
     return (
@@ -70,7 +95,11 @@ export default function Homepage() {
                             list={contactList}
                             showActiveContact={showActiveContact}
                         />
-                        <ContactDetails {...activeContact} />
+                        <ContactDetails
+                            {...activeContact}
+                            selected={!!activeContact.id}
+                            updateList={updateContactList}
+                        />
                     </div>
                 </div>
             )}

@@ -27,7 +27,9 @@ const ContactBox = ({ contact, isActive, setActive, showActiveContact }) => {
                     style={{ background: avatar }}
                 ></img>
             </div>
-            <div className="ms-2 mt-1">{name}</div>
+            <div className="mx-2 mt-1 text-nowrap overflow-hidden text-truncate">
+                {name}
+            </div>
         </div>
     );
 };
