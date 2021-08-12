@@ -4,6 +4,7 @@ import "../css/contactList.css";
 
 const ContactBox = ({ contact, isActive, setActive, setActiveContact }) => {
 	const { name, avatar, index } = contact;
+	const { phone } = contact["user-details"];
 	return (
 		<div
 			className={
@@ -25,7 +26,9 @@ const ContactBox = ({ contact, isActive, setActive, setActiveContact }) => {
 					className="rounded-circle"
 					style={{ background: avatar }}></img>
 			</div>
-			<div className="mx-2 mt-1 text-nowrap overflow-hidden text-truncate">{name}</div>
+			<div className="mx-2 mt-1 text-nowrap overflow-hidden text-truncate">
+				{!!name ? name : phone}
+			</div>
 		</div>
 	);
 };

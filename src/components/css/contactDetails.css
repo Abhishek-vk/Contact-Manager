@@ -42,3 +42,12 @@
     outline: none;
     width: 70%;
 }
+
+div[placeholder]:empty::before{
+    content: attr(placeholder);
+    opacity: 0.7;
+}
+
+div[placeholder]:empty:focus::before{
+    opacity: 0.5;
+}

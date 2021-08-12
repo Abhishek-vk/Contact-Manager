@@ -71,7 +71,8 @@ const ContactDetails = props => {
 					name="name"
 					disabled={!edit}
 					className="mt-3 w-25 mx-auto p-2"
-					html={contact.name ? contact.name : "Name"}
+					html={contact.name}
+					placeholder="Name"
 					onChange={e => {
 						let target = e.currentTarget.attributes.name.value;
 						let value = e.currentTarget.innerText;
@@ -105,13 +106,53 @@ const ContactDetails = props => {
 								title="Delete"
 								className="fad fa-trash-alt  me-3 text-danger fs-5"
 								style={{ cursor: "pointer" }}
-								onClick={() => console.log(id)}></i>
+								data-bs-toggle="modal"
+								data-bs-target="#confirmDelete"></i>
 						</>
 					)}
 				</div>
 			) : (
 				<div className="p-4"></div>
 			)}
+			<div
+				className="modal fade"
+				id="confirmDelete"
+				tabindex="-1"
+				aria-labelledby="ModalLabel"
+				aria-hidden="true">
+				<div className="modal-dialog modal-dialog-centered">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title" id="ModalLabel">
+								Delete Contact
+							</h5>
+							<button
+								type="button"
+								className="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div className="modal-body">
+							Are you sure you want to delete the contact?
+						</div>
+						<div className="modal-footer">
+							<button
+								type="button"
+								className="btn btn-secondary"
+								data-bs-dismiss="modal">
+								Cancel
+							</button>
+							<button
+								type="button"
+								className="btn btn-primary"
+								data-bs-dismiss="modal"
+								onClick={() => console.log(id)}>
+								Yes
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div id="details" className="container-md">
 				<div className="row">
 					{Object.keys(details).map(detail => {
@@ -125,11 +166,8 @@ const ContactDetails = props => {
 									</div>
 									<div className="col-md-8 col-10 text-break">
 										<ContentEditable
-											html={
-												!!details[detail]
-													? details[detail]
-													: detail[0].toUpperCase() + detail.slice(1)
-											}
+											html={details[detail]}
+											placeholder={detail[0].toUpperCase() + detail.slice(1)}
 											name={detail}
 											onChange={e => {
 												let target = e.currentTarget.attributes.name.value;
