@@ -11,6 +11,11 @@ class ContactServices {
 		const response = await RestCall("PATCH", body);
 		return response;
 	}
+
+	async deleteContact(id) {
+		const response = await RestCall("DELETE", null, id);
+		return response;
+	}
 }
 
 export default new ContactServices();

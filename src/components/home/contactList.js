@@ -13,6 +13,7 @@ const ContactBox = ({ contact, isActive, setActive, setActiveContact }) => {
 					: "ps-3 py-2 contactBox d-flex align-items-center"
 			}
 			onClick={() => {
+				sessionStorage.setItem("Active", true);
 				setActive(index);
 				setActiveContact();
 			}}>

@@ -43,6 +43,7 @@ export default function Homepage(props) {
 	};
 
 	useEffect(() => {
+		sessionStorage.setItem("Active", false);
 		ContactServices.getContactList()
 			.then(result => {
 				setTotal(result.total);
@@ -57,15 +58,29 @@ export default function Homepage(props) {
 	}, []);
 
 	const updateContactList = (action, data) => {
+		let tempRawList;
 		switch (action) {
 			case "Update":
-				let tempRawList = rawList;
-				for (let i = 0; i < tempRawList.length; i++) {
-					if (tempRawList[i].id === data.id) {
-						tempRawList[i] = { ...rawList[i], ...data };
-						setActiveContact(tempRawList[i]);
-					}
-				}
+				tempRawList = rawList.map(contact => (contact.id === data.id ? data : contact));
+				setActiveContact(data);
+				setRawList(tempRawList);
+				setcontactList(GroupContacts(tempRawList));
+				break;
+
+			case "Delete":
+				tempRawList = rawList.filter(contact => contact.id !== data.id);
+				setActiveContact({
+					id: "",
+					name: "",
+					avatar: "",
+					"user-details": {
+						phone: "",
+						email: "",
+						address: "",
+						website: "",
+					},
+				});
+				setTotal(total - 1);
 				setRawList(tempRawList);
 				setcontactList(GroupContacts(tempRawList));
 				break;
@@ -81,7 +96,7 @@ export default function Homepage(props) {
 				<div className="h1 d-flex m-auto loadingText">Loading...</div>
 			) : (
 				<div className="overflow-hidden container-fluid" style={{ flex: "1" }}>
-					<div className="row h-100">
+					<div className="row h-100 position-relative">
 						<ContactList
 							total={total}
 							list={contactList}

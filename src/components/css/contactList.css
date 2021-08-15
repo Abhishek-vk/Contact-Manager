@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
 
 #contactList{
-    width: 300px !important;
+    width: 300px;
     box-shadow: 0 0 2px gray;
     overflow-y: auto;
 }
@@ -32,4 +32,10 @@
 .activeContactBox{
     background: #a8cbff !important;
     color: #3874cf !important;
+}
+
+@media(max-width:767px){
+    #contactList{
+        width: 100%;
+    }
 }

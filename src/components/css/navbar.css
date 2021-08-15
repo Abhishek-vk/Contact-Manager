@@ -23,3 +23,34 @@
     color: #1270fc !important;
     background: #ffff46;
 }
+
+#navbar .theme:hover{
+    color: white;
+}
+
+.mobile-navbar{
+    display: none;
+}
+
+#navbar ul .mobile-nav-active{
+    color: #ffff46;
+}
+
+.theme-tag div:hover{
+    cursor: pointer;
+    color: white;
+}
+
+.theme-tag li{
+    cursor: pointer;
+}
+
+.theme-tag .show{
+    color: #fff !important;
+}
+
+@media(max-width:767px){
+    .mobile-navbar{
+        display: flex;
+    }
+}

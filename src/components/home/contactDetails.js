@@ -54,8 +54,20 @@ const ContactDetails = props => {
 		});
 	};
 
+	const Delete = () => {
+		ContactServices.deleteContact(id).then(res => {
+			if (res.statusCode === 200) {
+				props.updateList("Delete", res.deletedData);
+			} else console.log(res);
+		});
+	};
+
 	return (
-		<div id="contact-details" className="col px-0">
+		<div
+			id="contact-details"
+			className={`col px-0 ${
+				sessionStorage.getItem("Active") === "false" ? "d-none d-md-block" : ""
+			}`}>
 			<div className="shadow text-center pt-4 pb-4 rounded-top rounded-circle">
 				<img
 					src={`${avatar}`}
@@ -70,7 +82,7 @@ const ContactDetails = props => {
 					id="name"
 					name="name"
 					disabled={!edit}
-					className="mt-3 w-25 mx-auto p-2"
+					className="mt-3 mx-auto p-2"
 					html={contact.name}
 					placeholder="Name"
 					onChange={e => {
@@ -91,7 +103,7 @@ const ContactDetails = props => {
 								onClick={saveAll}></i>
 							<i
 								title="Discard"
-								className="fad fa-file-times me-3 text-danger fs-4"
+								className="fad fa-file-times me-sm-3 text-danger fs-4 no-filter"
 								style={{ cursor: "pointer" }}
 								onClick={resetAll}></i>
 						</>
@@ -104,7 +116,7 @@ const ContactDetails = props => {
 								onClick={() => setEdit(true)}></i>
 							<i
 								title="Delete"
-								className="fad fa-trash-alt  me-3 text-danger fs-5"
+								className="fad fa-trash-alt  me-sm-3 text-danger fs-5 no-filter"
 								style={{ cursor: "pointer" }}
 								data-bs-toggle="modal"
 								data-bs-target="#confirmDelete"></i>
@@ -117,7 +129,7 @@ const ContactDetails = props => {
 			<div
 				className="modal fade"
 				id="confirmDelete"
-				tabindex="-1"
+				tabIndex="-1"
 				aria-labelledby="ModalLabel"
 				aria-hidden="true">
 				<div className="modal-dialog modal-dialog-centered">
@@ -146,8 +158,8 @@ const ContactDetails = props => {
 								type="button"
 								className="btn btn-primary"
 								data-bs-dismiss="modal"
-								onClick={() => console.log(id)}>
-								Yes
+								onClick={Delete}>
+								Delete
 							</button>
 						</div>
 					</div>
@@ -157,7 +169,7 @@ const ContactDetails = props => {
 				<div className="row">
 					{Object.keys(details).map(detail => {
 						return (
-							<div key={detail} className="col-sm-6 contact-detail">
+							<div key={detail} className="col-sm-6 contact-detail my-1 my-sm-2">
 								<div className="row">
 									<div className="col-md-4 col-2 text-end">
 										<div className="d-flex flex-row-reverse align-items-center h-100">
