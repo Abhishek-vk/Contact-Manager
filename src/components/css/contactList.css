@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap');
 
-#contactList{
+#contactListContainer{
     width: 300px;
+}
+
+#contactList{
     box-shadow: 0 0 2px gray;
     overflow-y: auto;
 }
@@ -34,8 +37,34 @@
     color: #3874cf !important;
 }
 
+#add-user-icon{
+    bottom: 20px;
+    margin-right: 20px;
+    padding: 9px 12px;
+    border-radius: 50%;
+    background: #438cf9;
+    color: #fff;
+    z-index: 10;
+    opacity: 0.5;
+    transition: all 500ms;
+}
+
+#add-user-icon:hover{
+    opacity: 1;
+    transition: all 500ms;
+}
+
+@media(max-width:991px){
+    #contactListContainer{
+        width: 250px !important;
+    }
+}
+
 @media(max-width:767px){
-    #contactList{
-        width: 100%;
+    #contactListContainer{
+        width: 100% !important;
+    }
+    #add-user-icon{
+        bottom: 70px;
     }
 }

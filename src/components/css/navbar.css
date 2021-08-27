@@ -1,56 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre&family=Bree+Serif&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Averia+Serif+Libre&family=Bree+Serif&display=swap");
 
-#navbar{
-    background: #438cf9;
-    box-shadow: 0 0 5px #438cf9;
-    z-index: 999;
+#navbar {
+	background: #438cf9;
+	box-shadow: 0 0 5px #438cf9;
+	z-index: 999;
 }
 
-.brand{
-    font-family: 'Bree Serif', serif;
+.brand {
+	font-family: "Bree Serif", serif;
 }
 
-#navbar ul{
-    font-family: 'Averia Serif Libre', cursive;
-    font-weight: bold;
+#navbar ul {
+	font-family: "Averia Serif Libre", cursive;
+	font-weight: bold;
 }
 
-#navbar ul a{
-    border-radius: 5px;
+#navbar ul a {
+	border-radius: 5px;
 }
 
-#navbar ul .active{
-    color: #1270fc !important;
-    background: #ffff46;
+#navbar ul .active {
+	color: #1270fc !important;
+	background: #ffff46;
 }
 
-#navbar .theme:hover{
-    color: white;
+#navbar .theme:hover {
+	color: white;
 }
 
-.mobile-navbar{
-    display: none;
+.mobile-navbar {
+	display: none;
 }
 
-#navbar ul .mobile-nav-active{
-    color: #ffff46;
+.mobile-navbar .theme-tag ul {
+	left: 30px;
+	top: -140px;
+	width: auto;
+	min-width: 0;
 }
 
-.theme-tag div:hover{
-    cursor: pointer;
-    color: white;
+#navbar ul .mobile-nav-active {
+	color: #ffff46;
 }
 
-.theme-tag li{
-    cursor: pointer;
+.theme-tag div:hover {
+	cursor: pointer;
+	color: white;
 }
 
-.theme-tag .show{
-    color: #fff !important;
+.theme-tag li {
+	cursor: pointer;
 }
 
-@media(max-width:767px){
-    .mobile-navbar{
-        display: flex;
-    }
+.theme-tag .show {
+	color: #fff !important;
+}
+
+.active-theme {
+	color: white !important;
+}
+
+@media (max-width: 767px) {
+	.mobile-navbar {
+		display: flex;
+	}
 }

@@ -4,6 +4,7 @@ import CdIconList from "./contactDetailsIcons";
 import altUserImg from "../img/user-alt.png";
 import ContactServices from "../../service/contactServices";
 import "../css/contactDetails.css";
+import { NavLink } from "react-router-dom";
 
 const ContactDetails = props => {
 	const { id, name, avatar } = props;
@@ -63,69 +64,116 @@ const ContactDetails = props => {
 	};
 
 	return (
-		<div
-			id="contact-details"
-			className={`col px-0 ${
-				sessionStorage.getItem("Active") === "false" ? "d-none d-md-block" : ""
-			}`}>
-			<div className="shadow text-center pt-4 pb-4 rounded-top rounded-circle">
-				<img
-					src={`${avatar}`}
-					alt="No icon"
-					onError={e => (e.target.src = altUserImg)}
-					width="100px"
-					height="100px"
-					className="rounded-circle"
-					style={{ background: avatar }}
-				/>
-				<ContentEditable
-					id="name"
-					name="name"
-					disabled={!edit}
-					className="mt-3 mx-auto p-2"
-					html={contact.name}
-					placeholder="Name"
-					onChange={e => {
-						let target = e.currentTarget.attributes.name.value;
-						let value = e.currentTarget.innerText;
-						changeHandler(target, value, false);
-					}}
-				/>
-			</div>
-			{props.selected ? (
-				<div className="text-end m-4 fs-5 text-primary">
-					{edit ? (
-						<>
-							<i
-								title="Save"
-								className="fad fa-save me-3 fs-4"
-								style={{ cursor: "pointer" }}
-								onClick={saveAll}></i>
-							<i
-								title="Discard"
-								className="fad fa-file-times me-sm-3 text-danger fs-4 no-filter"
-								style={{ cursor: "pointer" }}
-								onClick={resetAll}></i>
-						</>
-					) : (
-						<>
-							<i
-								title="Edit"
-								className="fad fa-pencil-alt me-3 fs-5"
-								style={{ cursor: "pointer" }}
-								onClick={() => setEdit(true)}></i>
-							<i
-								title="Delete"
-								className="fad fa-trash-alt  me-sm-3 text-danger fs-5 no-filter"
-								style={{ cursor: "pointer" }}
-								data-bs-toggle="modal"
-								data-bs-target="#confirmDelete"></i>
-						</>
-					)}
+		<>
+			<div
+				id="contact-details"
+				className={`col px-0 pb-5 pb-md-0 ${
+					sessionStorage.getItem("Active") === "false" ? "d-none d-md-block" : ""
+				}`}>
+				<div className="d-block d-md-none sticky-top">
+					<NavLink
+						exact
+						to="/"
+						onClick={() => {
+							sessionStorage.setItem("Active", false);
+						}}>
+						<i className="fad fa-angle-double-left fs-5 ms-3 mt-1 text-primary"></i>
+					</NavLink>
 				</div>
-			) : (
-				<div className="p-4"></div>
-			)}
+				<div className="shadow text-center pt-4 pb-4 rounded-top rounded-circle">
+					<img
+						src={`${avatar}`}
+						alt="No icon"
+						onError={e => (e.target.src = altUserImg)}
+						width="100px"
+						height="100px"
+						className="rounded-circle"
+						style={{ background: avatar }}
+					/>
+					<ContentEditable
+						id="name"
+						name="name"
+						disabled={!edit}
+						className="mt-3 mx-auto p-2"
+						html={contact.name}
+						placeholder="Name"
+						onChange={e => {
+							let target = e.currentTarget.attributes.name.value;
+							let value = e.currentTarget.innerText;
+							changeHandler(target, value, false);
+						}}
+					/>
+				</div>
+				{props.selected ? (
+					<div className="text-end m-4 fs-5 text-primary">
+						{edit ? (
+							<>
+								<i
+									title="Save"
+									className="fad fa-save me-3 fs-4"
+									style={{ cursor: "pointer" }}
+									onClick={saveAll}></i>
+								<i
+									title="Discard"
+									className="fad fa-file-times me-sm-3 text-danger fs-4 no-filter"
+									style={{ cursor: "pointer" }}
+									onClick={resetAll}></i>
+							</>
+						) : (
+							<>
+								<i
+									title="Edit"
+									className="fad fa-pencil-alt me-3 fs-5"
+									style={{ cursor: "pointer" }}
+									onClick={() => setEdit(true)}></i>
+								<i
+									title="Delete"
+									className="fad fa-trash-alt  me-sm-3 text-danger fs-5 no-filter"
+									style={{ cursor: "pointer" }}
+									data-bs-toggle="modal"
+									data-bs-target="#confirmDelete"></i>
+							</>
+						)}
+					</div>
+				) : (
+					<div className="p-4"></div>
+				)}
+
+				<div id="details" className="container-md">
+					<div className="row">
+						{Object.keys(details).map(detail => {
+							return (
+								<div key={detail} className="col-sm-6 contact-detail my-1 my-sm-2">
+									<div className="row">
+										<div className="col-md-4 col-2 text-end">
+											<div className="d-flex flex-row-reverse align-items-center h-100">
+												{CdIconList[detail]}
+											</div>
+										</div>
+										<div className="col-md-8 col-10 text-break">
+											<ContentEditable
+												html={details[detail]}
+												placeholder={
+													detail[0].toUpperCase() + detail.slice(1)
+												}
+												name={detail}
+												onChange={e => {
+													let target =
+														e.currentTarget.attributes.name.value;
+													let value = e.currentTarget.innerText;
+													changeHandler(target, value, true);
+												}}
+												className="p-2"
+												disabled={!edit}
+											/>
+										</div>
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			</div>
 			<div
 				className="modal fade"
 				id="confirmDelete"
@@ -165,38 +213,7 @@ const ContactDetails = props => {
 					</div>
 				</div>
 			</div>
-			<div id="details" className="container-md">
-				<div className="row">
-					{Object.keys(details).map(detail => {
-						return (
-							<div key={detail} className="col-sm-6 contact-detail my-1 my-sm-2">
-								<div className="row">
-									<div className="col-md-4 col-2 text-end">
-										<div className="d-flex flex-row-reverse align-items-center h-100">
-											{CdIconList[detail]}
-										</div>
-									</div>
-									<div className="col-md-8 col-10 text-break">
-										<ContentEditable
-											html={details[detail]}
-											placeholder={detail[0].toUpperCase() + detail.slice(1)}
-											name={detail}
-											onChange={e => {
-												let target = e.currentTarget.attributes.name.value;
-												let value = e.currentTarget.innerText;
-												changeHandler(target, value, true);
-											}}
-											className="p-2"
-											disabled={!edit}
-										/>
-									</div>
-								</div>
-							</div>
-						);
-					})}
-				</div>
-			</div>
-		</div>
+		</>
 	);
 };
 

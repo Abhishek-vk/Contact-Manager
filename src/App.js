@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import MobileNav from "./components/mobileNav";
-import Navbar from "./components/navbar";
+import Navs from "./components/Navbars";
 import HomePage from "./components/home";
+import AddContact from "./components/addContact";
 
 function App() {
 	return (
@@ -9,16 +9,9 @@ function App() {
 			<Switch>
 				<>
 					<div className="vh-100 d-flex flex-column">
-						<Route path="/" component={Navbar} />
+						<Route path="/" component={Navs} />
 						<Route exact path="/" component={HomePage} />
-						<Route
-							path="/AddContact"
-							component={() => (
-								<>
-									<div className="d-flex m-auto"></div>
-								</>
-							)}
-						/>
+						<Route path="/AddContact" component={AddContact} />
 						<Route
 							path="/About"
 							component={() => (
@@ -27,7 +20,6 @@ function App() {
 								</>
 							)}
 						/>
-						<Route path="/" component={MobileNav} />
 					</div>
 				</>
 			</Switch>

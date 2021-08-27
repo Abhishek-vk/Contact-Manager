@@ -22,6 +22,12 @@ export default function Homepage(props) {
 	});
 
 	const GroupContacts = arrayData => {
+		const sortName = (obj1, obj2) => {
+			if (obj1.name < obj2.name) return -1;
+			else if (obj1.name > obj2.name) return 1;
+			else return 0;
+		};
+		arrayData.sort(sortName);
 		let GroupedContacts = [],
 			count = 0;
 		for (let index = 0; index < 27; index++) {
