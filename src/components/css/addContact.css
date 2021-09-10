@@ -1,0 +1,28 @@
+#AddContactContainer {
+	padding-bottom: 1.4rem;
+}
+
+#AddContact {
+	min-width: 320px;
+	overflow-y: auto;
+	background: #438cf933;
+	max-width: 575px;
+	width: 100%;
+	box-shadow: #438cf97a 0px 0px 10px;
+	padding-bottom: 3rem !important;
+}
+
+@media (max-width: 767px) {
+	#AddContactContainer {
+		padding-bottom: 4.4rem;
+	}
+}
+
+@media (max-width: 576px) {
+	#AddContactContainer {
+		padding-bottom: 3.15rem;
+	}
+	#AddContact{
+		border-radius: 0 !important;
+	}
+}
